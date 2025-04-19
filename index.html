@@ -163,8 +163,8 @@ document.body.appendChild(renderer.domElement);
     let mixer;
     let animationDuration;
     const dynamicLights = [];
-    const path = 'model/heyaportforiov3.glb?rev=' + Date.now();
-    loader.load('model/heyaportforiov3.glb', (gltf) => {
+    const path = '/portforiothree/model/heyaportforiov3.glb?rev=' + Date.now();
+    loader.load('/portforiothree/model/heyaportforiov3.glb', (gltf) => {
       cameraDriver = gltf.scene.getObjectByName("CameraDriver");
 
       gltf.scene.traverse((child) => {
