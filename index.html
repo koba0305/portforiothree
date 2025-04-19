@@ -139,7 +139,7 @@
     
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    renderer.setPixelRatio(isMobile ? 0.05 : Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? 0.25 : Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -308,12 +308,13 @@ window.updateLabels = updateLabels;
     animate();
 
     window.addEventListener('resize', () => {
-      const aspect = window.innerWidth / window.innerHeight;
-      perspectiveCamera.aspect = aspect;
-      perspectiveCamera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 2) : 1);
-    });
+  const aspect = window.innerWidth / window.innerHeight;
+  perspectiveCamera.aspect = aspect;
+  perspectiveCamera.updateProjectionMatrix();
+
+  renderer.setPixelRatio(isMobile ? 0.25 : Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
   </script>
 </body>
 </html>
