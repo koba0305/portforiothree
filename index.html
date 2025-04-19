@@ -157,7 +157,15 @@
     let animationDuration;
     const dynamicLights = [];
 
-    loader.load('model/heyaportforio.glb', (gltf) => {
+    loader.load('/portforiothree/model/heyaportforiov3.glb'+ Date.now(), (gltf) => {
+    console.log('ok');
+    scene.add(gltf.scene);
+  },
+  undefined,
+  (error) => {
+    console.error('noooooo:', error);
+  }
+);
       cameraDriver = gltf.scene.getObjectByName("CameraDriver");
 
       gltf.scene.traverse((child) => {
