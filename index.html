@@ -135,17 +135,18 @@
     perspectiveCamera.position.set(0, 1.6, 5);
     perspectiveCamera.lookAt(0, 1, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: false });
+    const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'low-power'});
     
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    renderer.setPixelRatio(isMobile ? 0.25 : Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? 0.05 : Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = isMobile ? 0.5 : 0.8;
-renderer.shadowMap.enabled = !isMobile;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = isMobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
+
 
 document.body.appendChild(renderer.domElement);
 
