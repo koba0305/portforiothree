@@ -135,11 +135,14 @@
     perspectiveCamera.position.set(0, 1.6, 5);
     perspectiveCamera.lookAt(0, 1, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    
+    const renderer = new THREE.WebGLRenderer({
+  antialias: !isMobile,
+  powerPreference: isMobile ? 'low-power' : 'high-performance',
+  precision: isMobile ? 'lowp' : 'highp'
+});
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-renderer.setPixelRatio(isMobile ? 0.5 : Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? 0.25 : Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -160,8 +163,8 @@ document.body.appendChild(renderer.domElement);
     let mixer;
     let animationDuration;
     const dynamicLights = [];
-    const path = '/portforiothree/model/heyaportforiov3.glb?rev=' + Date.now();
-    loader.load('/portforiothree/model/heyaportforiov3.glb', (gltf) => {
+    const path = 'model/heyaportforiov3.glb?rev=' + Date.now();
+    loader.load('model/heyaportforiov3.glb', (gltf) => {
       cameraDriver = gltf.scene.getObjectByName("CameraDriver");
 
       gltf.scene.traverse((child) => {
