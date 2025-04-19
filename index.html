@@ -2,96 +2,312 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>GLB表示</title>
+  <title>GLB表示（ライトアクネ + 自動スクロール双方向ループ）</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; background: #000; overflow: hidden; }
-    canvas { display: block; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      height: 45000px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      font-family: 'Bebas Neue', sans-serif;
+    }
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .scroll-label {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-80px);
+      color: white;
+      font-weight: bold;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+      text-decoration: none !important;
+      border-bottom: none !important;
+    }
+    .scroll-label#contact-svg {
+      top: 50%;
+      left: 50%;
+      width: 40vw;
+      height: auto;
+      margin-left: -20vw;
+      margin-top: -20vw;
+      pointer-events: auto;
+    }
+    .scroll-label img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .scroll-label:first-of-type,
+    .scroll-label:nth-of-type(3),
+    .scroll-label:nth-of-type(7) {
+      font-size: 17vw;
+      left: 5%;
+      transform: translateX(0);
+    }
+    .scroll-label:nth-of-type(5) ,
+    .scroll-label:nth-of-type(9) 
+    {
+      font-size: 17vw;
+      left: 45%;
+      transform: translateX(0);
+    }
+    .scroll-label:nth-of-type(2),
+      .scroll-label:nth-of-type(4),
+    .scroll-label:nth-of-type(8) {
+      font-size: 2vw;
+      transform: translateX(0);
+    }
+    .scroll-label:nth-of-type(6) ,
+    .scroll-label:nth-of-type(10) 
+    {
+      font-size: 2vw;
+      left: 75%;
+      transform: translateX(0);
+    }
+    
+    @media (max-width: 768px) {
+      .scroll-label:first-of-type,
+      .scroll-label:nth-of-type(3),
+    .scroll-label:nth-of-type(7) {
+      font-size: 25vw;
+      left: 2%;
+
+    }
+    .scroll-label:nth-of-type(5) ,
+    .scroll-label:nth-of-type(9) 
+    {
+      font-size: 25vw;
+      left: 25%;
+    }
+
+  }
   </style>
 </head>
 <body>
-  <script type="importmap">
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.034 0.284 0.534 0.784" data-hide="0.05 0.3 0.55 0.8" style="top: 5%;">About me</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.036 0.286 0.536 0.786" data-hide="0.055 0.305 0.555 0.805" style="top: 60%;left: 7%">This is my profile.</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.066 0.316 0.566 0.816" data-hide="0.086 0.336 0.586 0.836" style="top: 70%;">Hardware</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.068 0.318 0.568 0.818" data-hide="0.088 0.338 0.588 0.838" style="top: 57%;left: 65%;">These are the hardware devices<br> I have created thus far.</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.11 0.36 0.61 0.86" data-hide="0.13 0.38 0.63 0.88" style="top: 3%;">2Dworks</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.112 0.362 0.612 0.862" data-hide="0.132 0.382 0.632 0.882" style="top: 26%;left: 48%;">Here is a selection of illustrations and cover designs I have worked on.</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.14 0.39 0.64 0.89" data-hide="0.16 0.41 0.66 0.91" style="top: 3%;">Rigmodels</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.142 0.392 0.642 0.892" data-hide="0.162 0.412 0.662 0.912" style="top: 25%; left: 5%;">Here is a selection of my work, including 2D rigged models and animated videos.</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.174 0.424 0.674 0.924" data-hide="0.197 0.447 0.697 0.947" style="top: 2%;">3Dworks</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.176 0.426 0.676 0.926" data-hide="0.199 0.449 0.699 0.949" style="top: 25%;">Here is a collection of 3D models <br>I have designed and created.</a>
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.24 0.49 0.74 0.99" data-hide="0.25 0.5 0.75 1.0" id="contact-svg" href="mailto:kobayashi.yume.0305@gmail.com"> <img src="model/contact.svg" alt="contact">
+  </a><script type="importmap">
     {
       "imports": {
         "three": "./build/three.module.js"
       }
     }
   </script>
-
   <script type="module">
     import * as THREE from 'three';
     import { GLTFLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/GLTFLoader.js';
     import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 1.6, 3);
+    const aspect = window.innerWidth / window.innerHeight;
+    const clock = new THREE.Clock();
+    let scrollRatio = 0;
+
+    const perspectiveCamera = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000);
+    perspectiveCamera.position.set(0, 1.6, 5);
+    perspectiveCamera.lookAt(0, 1, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const isMobile = /iPhone|Android/.test(navigator.userAgent);
+    renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 2) : 1);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 0.8;
-    renderer.shadowMap.enabled = true; // ★ 追加
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // ★ 追加
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
 
-
-    const controls = new OrbitControls(camera, renderer.domElement);
+    const controls = new OrbitControls(perspectiveCamera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.enableRotate = false;
 
     const loader = new GLTFLoader();
-    loader.load('model/heyaportforio.glb', (gltf) => {
-  gltf.scene.traverse((child) => {
-    if (child.isMesh) {
-      child.castShadow = true;
-      child.receiveShadow = true;
+    let cameraDriver;
+    let mixer;
+    let animationDuration;
+    const dynamicLights = [];
 
-      if (child.material && child.material.roughness !== undefined) {
-        child.material.roughness = 0.8;
-        child.material.metalness = 0.0;
-      }
-    }
+    loader.load('model/heyaportforio2.glb', (gltf) => {
+      cameraDriver = gltf.scene.getObjectByName("CameraDriver");
 
-    if (child.isLight) {
-  child.castShadow = true;
-  child.intensity *= 0.003;
+      gltf.scene.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          if (child.material && child.material.roughness !== undefined) {
+            child.material.roughness = 0.8;
+            child.material.metalness = 0.0;
+          }
+        }
+        if (child.isLight) {
+          child.castShadow = true;
+          child.userData.originalIntensity = child.intensity * 0.003;
+          child.intensity = child.userData.originalIntensity;
+          dynamicLights.push(child);
 
-  console.log(child.name, child.type, child.castShadow, child.shadow?.bias, child.shadow?.normalBias);
+          if (child.shadow) {
+            child.shadow.mapSize.width = 256;
+            child.shadow.mapSize.height = 256;
+            if (child.shadow.camera) {
+              child.shadow.camera.near = 0.1;
+              child.shadow.camera.far = 100;
+              child.shadow.camera.left = -1;
+              child.shadow.camera.right = 1;
+              child.shadow.camera.top = 1;
+              child.shadow.camera.bottom = -1;
+            }
+          }
+        }
+      });
 
-  if (child.shadow) {
-    child.shadow.mapSize.width = 256;
-child.shadow.mapSize.height = 256;
+      mixer = new THREE.AnimationMixer(gltf.scene);
+      gltf.animations.forEach(clip => {
+        mixer.clipAction(clip).play();
+        animationDuration = clip.duration;
+      });
 
-
-    if (child.shadow.camera) {
-
-      child.shadow.camera.near = 0.1;
-      child.shadow.camera.far = 100;
-      child.shadow.camera.left = -1;
-child.shadow.camera.right = 1;
-child.shadow.camera.top = 1;
-child.shadow.camera.bottom = -1;
-
-    }
-  }
-}
-
-  });
-
-  scene.add(gltf.scene);
+      scene.add(gltf.scene);
+      sceneReady = true;
     }, undefined, (error) => {
       console.error('読み込み失敗:', error);
     });
 
+    let sceneReady = false;
+    const FADE_DURATION = 500;
+
+function fadeIn(label) {
+  label.classList.add('visible');
+  label.style.transition = `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease`;
+  label.style.opacity = '1';
+  label.style.pointerEvents = 'auto';
+  if (label.id === 'contact-svg') {
+    label.style.transform = 'translateY(0)';
+  } else {
+    label.style.transform = 'translateX(0)';
+  }
+}
+
+function fadeOut(label) {
+  label.classList.remove('visible');
+  label.style.transition = `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease`;
+  label.style.opacity = '0';
+  label.style.pointerEvents = 'none';
+  if (label.id === 'contact-svg') {
+    label.style.transform = 'translateY(20px)';
+  } else {
+    label.style.transform = 'translateX(-80px)';
+  }
+}
+
+function updateLabels(scrollRatio) {
+  const labels = document.querySelectorAll('.scroll-label');
+  labels.forEach(label => {
+    const shows = label.dataset.show.split(' ').map(parseFloat);
+    const hides = label.dataset.hide.split(' ').map(parseFloat);
+    let matched = false;
+    for (let i = 0; i < shows.length; i++) {
+      if (scrollRatio >= shows[i] && scrollRatio <= hides[i]) {
+        matched = true;
+        break;
+      }
+    }
+    const currentlyVisible = label.classList.contains('visible');
+    if (matched && !currentlyVisible) {
+      fadeIn(label);
+    } else if (!matched && currentlyVisible) {
+      fadeOut(label);
+    }
+  });
+}
+
+window.updateLabels = updateLabels;
     function animate() {
       requestAnimationFrame(animate);
-      renderer.render(scene, camera);
+
+      const delta = clock.getDelta();
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      const scrollY = window.scrollY;
+      scrollRatio = scrollY / maxScroll;
+
+      console.log(`scrollRatio: ${scrollRatio.toFixed(4)}`);
+
+      updateLabels(scrollRatio);
+
+      if (scrollY >= maxScroll - 1) {
+        window.scrollTo({ top: 1, behavior: 'auto' });
+      } else if (scrollY <= 0) {
+        window.scrollTo({ top: maxScroll - 1, behavior: 'auto' });
+      }
+
+      if (sceneReady && mixer && animationDuration !== undefined) {
+        const desiredTime = scrollRatio * animationDuration;
+        mixer.setTime(desiredTime);
+        scene.updateMatrixWorld(true);
+      }
+
+      let dimFactor = 1.0;
+      if (scrollRatio < 0.3) {
+        dimFactor = 1.0;
+      } else if (scrollRatio < 0.4) {
+        dimFactor = 1.0 - 0.5 * ((scrollRatio - 0.3) / 0.1);
+      } else if (scrollRatio < 0.6) {
+        dimFactor = 0.5;
+      } else if (scrollRatio < 0.7) {
+        dimFactor = 0.5 + 0.5 * ((scrollRatio - 0.6) / 0.1);
+      } else {
+        dimFactor = 1.0;
+      }
+
+      dynamicLights.forEach(light => {
+        light.intensity = light.userData.originalIntensity * dimFactor;
+      });
+
+      if (sceneReady && cameraDriver) {
+        perspectiveCamera.position.copy(cameraDriver.position);
+        perspectiveCamera.quaternion.copy(cameraDriver.quaternion);
+      }
+
+      renderer.render(scene, perspectiveCamera);
     }
+
     animate();
 
     window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
+      const aspect = window.innerWidth / window.innerHeight;
+      perspectiveCamera.aspect = aspect;
+      perspectiveCamera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 2) : 1);
     });
   </script>
 </body>
