@@ -157,17 +157,9 @@
     let animationDuration;
     const dynamicLights = [];
 
-    loader.load('/portforiothree/model/heyaportforiov3.glb'+ Date.now(), (gltf) => {
-    console.log('ok');
-    scene.add(gltf.scene);
-  },
-  undefined,
-  (error) => {
-    console.error('noooooo:', error);
-  }
-);
+    loader.load('/portforiothree/model/heyaportforiov3.glb', (gltf) => {
       cameraDriver = gltf.scene.getObjectByName("CameraDriver");
-
+console.log('読み込み成功');
       gltf.scene.traverse((child) => {
         if (child.isMesh) {
           child.castShadow = true;
