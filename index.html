@@ -136,15 +136,19 @@
     perspectiveCamera.lookAt(0, 1, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    const isMobile = /iPhone|Android/.test(navigator.userAgent);
-    renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 2) : 1);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.8;
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    document.body.appendChild(renderer.domElement);
+    
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+renderer.setPixelRatio(isMobile ? 0.5 : Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = isMobile ? 0.5 : 0.8;
+renderer.shadowMap.enabled = !isMobile;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+document.body.appendChild(renderer.domElement);
+
 
     const controls = new OrbitControls(perspectiveCamera, renderer.domElement);
     controls.enableZoom = false;
@@ -156,10 +160,10 @@
     let mixer;
     let animationDuration;
     const dynamicLights = [];
-
+    const path = '/portforiothree/model/heyaportforiov3.glb?rev=' + Date.now();
     loader.load('/portforiothree/model/heyaportforiov3.glb', (gltf) => {
       cameraDriver = gltf.scene.getObjectByName("CameraDriver");
-console.log('読み込み成功');
+
       gltf.scene.traverse((child) => {
         if (child.isMesh) {
           child.castShadow = true;
