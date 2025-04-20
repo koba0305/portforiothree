@@ -84,6 +84,21 @@
       transform: translateX(0);
     }
     
+    .intro-label{
+      top: 20%;
+}
+
+@keyframes fadeOnce {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
     @media (max-width: 768px) {
       .scroll-label:first-of-type,
       .scroll-label:nth-of-type(3),
@@ -98,7 +113,9 @@
       font-size: 25vw;
       left: 25%;
     }
-
+    .intro-label{
+      top: 40%;
+}
   }
   @media (max-width: 468px) {
     .scroll-label:first-of-type,
@@ -115,6 +132,7 @@
 
     }
 
+
   }
   </style>
 </head>
@@ -129,8 +147,10 @@
   <a class="scroll-label" href="https://www.google.com/" data-show="0.142 0.392 0.642 0.892" data-hide="0.162 0.412 0.662 0.912" style="top: 25%; left: 5%;">Here is a selection of my work, including 2D rigged models and animated videos.</a>
   <a class="scroll-label" href="https://www.google.com/" data-show="0.174 0.424 0.674 0.924" data-hide="0.197 0.447 0.697 0.947" style="top: 2%;">3Dworks</a>
   <a class="scroll-label" href="https://www.google.com/" data-show="0.176 0.426 0.676 0.926" data-hide="0.199 0.449 0.699 0.949" style="top: 25%;">Here is a collection of 3D models <br>I have designed and created.</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.234 0.484 0.734 0.984" data-hide="0.25 0.5 0.75 1.0" id="contact-svg" href="mailto:kobayashi.yume.0305@gmail.com"> <img src="model/contact.svg" alt="contact">
-  </a><script type="importmap">
+  <a class="scroll-label" href="https://www.google.com/" data-show="0.234 0.484 0.734 0.984" data-hide="0.25 0.5 0.75 1.0" id="contact-svg" href="mailto:kobayashi.yume.0305@gmail.com"> <img src="model/contact.svg" alt="contact"></a>
+  <a class="scroll-label"  data-show="0" data-hide="0.015" id="intro-label contact-svg" style="left:5%; top: 30%;font-size: 20vw">KOBAYASHI YUME</a>
+
+  <script type="importmap">
     {
       "imports": {
         "three": "./build/three.module.js"
@@ -141,6 +161,11 @@
     import * as THREE from 'three';
     import { GLTFLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/GLTFLoader.js';
     import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 
     const scene = new THREE.Scene();
     const aspect = window.innerWidth / window.innerHeight;
@@ -157,7 +182,7 @@
 
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = isMobile ? 0.5 : 0.8;
+renderer.toneMappingExposure = isMobile ? 0.7 : 0.8;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = isMobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
 
