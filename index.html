@@ -158,6 +158,11 @@
     }
   </script>
   <script type="module">
+        window.addEventListener('load', () => {
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, 50); // 少し遅らせることで安全に確実に反映
+});
     import * as THREE from 'three';
     import { GLTFLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/GLTFLoader.js';
     import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
@@ -247,11 +252,9 @@ document.body.appendChild(renderer.domElement);
 
     let sceneReady = false;
     const FADE_DURATION = 500;
-    window.addEventListener('load', () => {
-  setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, 50); // 少し遅らせることで安全に確実に反映
-});
+
+
+
 function fadeIn(label) {
   label.classList.add('visible');
   label.style.transition = `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease`;
