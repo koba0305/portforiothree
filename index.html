@@ -169,7 +169,7 @@
     if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
-
+const labels = document.querySelectorAll('.scroll-label');
 
     const scene = new THREE.Scene();
     const aspect = window.innerWidth / window.innerHeight;
@@ -180,15 +180,28 @@
     perspectiveCamera.position.set(0, 1.6, 5);
     perspectiveCamera.lookAt(0, 1, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'low-power'});
-    
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+const renderer = new THREE.WebGLRenderer({
+  antialias: !isMobile
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = isMobile ? 0.7 : 0.8;
+renderer.toneMappingExposure = isMobile ? 0.5 : 0.8;
+
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = isMobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
+
+if (isMobile) {
+  renderer.shadowMap.type = THREE.BasicShadowMap;
+  renderer.setPixelRatio(0.3);
+  renderer.toneMappingExposure = 0.5; 
+} else {
+  renderer.shadowMap.type = THREE.BasicShadowMap;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+  renderer.toneMappingExposure = 0.8;
+}
+
 
 
 document.body.appendChild(renderer.domElement);
@@ -280,7 +293,7 @@ function fadeOut(label) {
 }
 
 function updateLabels(scrollRatio) {
-  const labels = document.querySelectorAll('.scroll-label');
+
   labels.forEach(label => {
     const shows = label.dataset.show.split(' ').map(parseFloat);
     const hides = label.dataset.hide.split(' ').map(parseFloat);
@@ -356,8 +369,6 @@ window.updateLabels = updateLabels;
   const aspect = window.innerWidth / window.innerHeight;
   perspectiveCamera.aspect = aspect;
   perspectiveCamera.updateProjectionMatrix();
-
-  renderer.setPixelRatio(isMobile ? 0.25 : Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
   </script>
