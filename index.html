@@ -5,10 +5,11 @@
   <title>GLB表示（ライトアクネ + 自動スクロール双方向ループ）</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <style>
+    
     html, body {
       margin: 0;
       padding: 0;
-      background: #000;
+      background: #000000;
       height: 45000px;
       overflow-x: hidden;
       overflow-y: scroll;
@@ -71,16 +72,17 @@
       transform: translateX(0);
     }
     .scroll-label:nth-of-type(2),
-      .scroll-label:nth-of-type(4),
-    .scroll-label:nth-of-type(8) {
+      .scroll-label:nth-of-type(4){
       font-size: 2vw;
       transform: translateX(0);
     }
     .scroll-label:nth-of-type(6) ,
+    .scroll-label:nth-of-type(8) ,
     .scroll-label:nth-of-type(10) 
     {
       font-size: 2vw;
       left: 75%;
+      top: 30%;
       transform: translateX(0);
     }
     
@@ -99,6 +101,44 @@
   }
 }
 
+
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  z-index: 9;
+  opacity: 1;
+  transition: opacity 2s ease;
+  pointer-events: none;
+}
+
+#loading-screen.fade-out {
+  opacity: 0;
+}
+
+
+
+.download-link {
+  animation: pulse 2s ease-in-out infinite;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+@keyframes pulse {
+  0%, 100% {
+    text-shadow: 0 0 0px white;
+  }
+  50% {
+    text-shadow: 0 0 8px white;
+  }
+}
+.download-link:hover {
+  animation: none; 
+  filter: drop-shadow(0 0 8px white);
+}
+
     @media (max-width: 768px) {
       .scroll-label:first-of-type,
       .scroll-label:nth-of-type(3),
@@ -107,6 +147,14 @@
       left: 2%;
 
     }
+    .scroll-label:nth-of-type(6) ,
+    .scroll-label:nth-of-type(8) ,
+    .scroll-label:nth-of-type(10) 
+    {
+      top: 25%;
+
+    }
+
     .scroll-label:nth-of-type(5) ,
     .scroll-label:nth-of-type(9) 
     {
@@ -131,24 +179,33 @@
       font-size: 32vw;
 
     }
+    .scroll-label:nth-of-type(6) ,
+    .scroll-label:nth-of-type(10) 
+    {
+      top: 30%;
+
+    }
+
 
 
   }
   </style>
 </head>
 <body>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.034 0.284 0.534 0.784" data-hide="0.05 0.3 0.55 0.8" style="top: 5%;">About me</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.036 0.286 0.536 0.786" data-hide="0.055 0.305 0.555 0.805" style="top: 60%;left: 7%">This is my profile.</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.066 0.316 0.566 0.816" data-hide="0.086 0.336 0.586 0.836" style="top: 70%;">Hardware</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.068 0.318 0.568 0.818" data-hide="0.088 0.338 0.588 0.838" style="top: 57%;left: 65%;">These are the hardware devices<br> I have created thus far.</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.11 0.36 0.61 0.86" data-hide="0.13 0.38 0.63 0.88" style="top: 3%;">2Dworks</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.112 0.362 0.612 0.862" data-hide="0.132 0.382 0.632 0.882" style="top: 26%;left: 48%;">Here is a selection of illustrations and cover designs I have worked on.</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.14 0.39 0.64 0.89" data-hide="0.16 0.41 0.66 0.91" style="top: 3%;">Rigmodels</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.142 0.392 0.642 0.892" data-hide="0.162 0.412 0.662 0.912" style="top: 25%; left: 5%;">Here is a selection of my work, including 2D rigged models and animated videos.</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.174 0.424 0.674 0.924" data-hide="0.197 0.447 0.697 0.947" style="top: 2%;">3Dworks</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.176 0.426 0.676 0.926" data-hide="0.199 0.449 0.699 0.949" style="top: 25%;">Here is a collection of 3D models <br>I have designed and created.</a>
-  <a class="scroll-label" href="https://www.google.com/" data-show="0.234 0.484 0.734 0.984" data-hide="0.25 0.5 0.75 0.99999" id="contact-svg" href="mailto:kobayashi.yume.0305@gmail.com"> <img src="model/contact.svg" alt="contact"></a>
-  <a class="scroll-label"  data-show="0" data-hide="0.015" id="intro-label contact-svg" style="left:5%; top: 30%;font-size: 20vw">KOBAYASHI YUME</a>
+  <div id="loading-screen"></div>
+  <a class="scroll-label"  data-show="0.034 0.284 0.534 0.784" data-hide="0.05 0.3 0.55 0.8" style="top: 5%;">About me</a>
+  <a class="scroll-label"  data-show="0.036 0.286 0.536 0.786" data-hide="0.055 0.305 0.555 0.805" style="top: 50%;left: 7%">This is my profile.</a>
+  <a class="scroll-label"  data-show="0.066 0.316 0.566 0.816" data-hide="0.086 0.336 0.586 0.836" style="top: 70%;">Hardware</a>
+  <a class="scroll-label"  data-show="0.068 0.318 0.568 0.818" data-hide="0.088 0.338 0.588 0.838" style="top: 57%;left: 65%;">These are the hardware devices<br> I have created thus far.</a>
+  <a class="scroll-label"  data-show="0.11 0.36 0.61 0.86" data-hide="0.13 0.38 0.63 0.88" style="top: 3%;">2Dworks</a>
+  <a class="scroll-label"  data-show="0.112 0.362 0.612 0.862" data-hide="0.132 0.382 0.632 0.882" style="left: 48%;">Here is a selection of illustrations and cover designs I have worked on.</a>
+  <a class="scroll-label"  data-show="0.14 0.39 0.64 0.89" data-hide="0.16 0.41 0.66 0.91" style="top: 3%;">Rigmodels</a>
+  <a class="scroll-label"  data-show="0.142 0.392 0.642 0.892" data-hide="0.162 0.412 0.662 0.912" style="left: 5%;">Here is a selection of my work, including 2D rigged models and animated videos.</a>
+  <a class="scroll-label"  data-show="0.174 0.424 0.674 0.924" data-hide="0.197 0.447 0.697 0.947" style="top: 2%;">3Dworks</a>
+  <a class="scroll-label"  data-show="0.176 0.426 0.676 0.926" data-hide="0.199 0.449 0.699 0.949" >Here is a collection of 3D models <br>I have designed and created.</a>
+  <a class="scroll-label download-link"  data-show="0.234 0.484 0.734 0.984" data-hide="0.25 0.5 0.75 0.99999" id="contact-svg" href="mailto:kobayashi.yume.0305@gmail.com"> <img src="model/contact.svg" alt="contact"></a>
+  <a class="scroll-label"  data-show="0" data-hide="0.015" id="intro-label" style="left:5%; top: 20%;font-size: 20vw;">KOBAYASHI YUME</a>
+  <a class="scroll-label download-link"  data-show="0.204 0.454 0.704 0.954" data-hide="0.225 0.475 0.725 0.975" id="contact-svg" style="left:36vw;top:43vh; margin-left: 0;margin-top: 0;font-size: 4vw;"href="kobayashiyume.pdf" target="_blank" rel="noopener noreferrer">PORTFORIO_PDF_DOWNLOAD</a>
 
   <script type="importmap">
     {
@@ -163,6 +220,7 @@
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, 50); // 少し遅らせることで安全に確実に反映
 });
+
     import * as THREE from 'three';
     import { GLTFLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/GLTFLoader.js';
     import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
@@ -217,8 +275,8 @@ document.body.appendChild(renderer.domElement);
     let mixer;
     let animationDuration;
     const dynamicLights = [];
-    const path = '/portforiothree/model/heyaportforiov3.glb?rev=' + Date.now();
-    loader.load('/portforiothree/model/heyaportforiov3.glb', (gltf) => {
+    const path = 'model/heyaportforiokeiryoutest.glb?rev=' + Date.now();
+    loader.load('model/heyaportforiokeiryoutest.glb', (gltf) => {
       cameraDriver = gltf.scene.getObjectByName("CameraDriver");
 
       gltf.scene.traverse((child) => {
@@ -259,6 +317,16 @@ document.body.appendChild(renderer.domElement);
 
       scene.add(gltf.scene);
       sceneReady = true;
+
+      const loadingScreen = document.getElementById('loading-screen');
+  if (loadingScreen) {
+    loadingScreen.classList.add('fade-out');
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+    }, 2000); // CSSと同じ時間で
+  }
+
+
     }, undefined, (error) => {
       console.error('読み込み失敗:', error);
     });
@@ -313,14 +381,19 @@ function updateLabels(scrollRatio) {
   });
 }
 
+
+
 window.updateLabels = updateLabels;
     function animate() {
       requestAnimationFrame(animate);
 
+
+      
       const delta = clock.getDelta();
       const maxScroll = document.body.scrollHeight - window.innerHeight;
       const scrollY = window.scrollY;
       scrollRatio = scrollY / maxScroll;
+
 
       console.log(`scrollRatio: ${scrollRatio.toFixed(4)}`);
 
@@ -371,6 +444,10 @@ window.updateLabels = updateLabels;
   perspectiveCamera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+
+
+
   </script>
 </body>
 </html>
