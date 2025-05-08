@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>GLB表示（ライトアクネ + 自動スクロール双方向ループ）</title>
+  <title>KobayashiYume-portforio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <style>
     
@@ -185,9 +185,6 @@
       top: 30%;
 
     }
-
-
-
   }
   </style>
 </head>
@@ -218,9 +215,8 @@
         window.addEventListener('load', () => {
   setTimeout(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
-  }, 50); // 少し遅らせることで安全に確実に反映
+  }, 50);
 });
-
     import * as THREE from 'three';
     import { GLTFLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/GLTFLoader.js';
     import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
@@ -263,8 +259,6 @@ if (isMobile) {
 
 
 document.body.appendChild(renderer.domElement);
-
-
     const controls = new OrbitControls(perspectiveCamera, renderer.domElement);
     controls.enableZoom = false;
     controls.enablePan = false;
@@ -323,7 +317,7 @@ document.body.appendChild(renderer.domElement);
     loadingScreen.classList.add('fade-out');
     setTimeout(() => {
       loadingScreen.style.display = 'none';
-    }, 2000); // CSSと同じ時間で
+    }, 2000);
   }
 
 
@@ -444,8 +438,6 @@ window.updateLabels = updateLabels;
   perspectiveCamera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
-
-
 
 
   </script>
